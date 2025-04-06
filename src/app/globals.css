@@ -1,0 +1,453 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Color variables */
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-active: #3730a3;
+  --color-secondary: #6b7280;
+  --color-secondary-hover: #4b5563;
+  --color-text: #171717;
+  --color-text-light: #4b5563;
+  --color-background: #f9fafb;
+  --color-background-light: #ffffff;
+  --color-background-dark: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-border-hover: #d1d5db;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+  
+  /* Spacing variables */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+  
+  /* Font variables */
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-heading: var(--font-main);
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Animation speed */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Transition for theme changes */
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-family: var(--font-main);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  touch-action: manipulation;
+}
+
+/* Empêcher les débordements horizontaux sur petits écrans */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Amélioration des zones tactiles pour les appareils tactiles */
+@media (max-width: 767px) {
+  button, a, .btn, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  input, select, textarea {
+    font-size: 16px !important; /* Empêcher le zoom automatique sur iOS */
+  }
+  
+  .touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out forwards;
+  }
+  
+  /* Utilités adaptatives pour les écrans mobiles */
+  .text-adaptive {
+    font-size: clamp(0.875rem, 4vw, 1.25rem);
+  }
+  
+  .spacing-adaptive {
+    padding: clamp(0.5rem, 3vw, 1.5rem);
+    margin: clamp(0.5rem, 3vw, 1.5rem);
+  }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-10px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity:.75; 
+  }
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
+  50% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; }
+  100% { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor; }
+}
+
+@layer components {
+  .animate-blink {
+    animation: blink 1s steps(1) infinite;
+  }
+  
+  .animate-blink-slow {
+    animation: blink 2s steps(1) infinite;
+  }
+  
+  .animate-blink-fast {
+    animation: blink 0.5s steps(1) infinite;
+  }
+}
+
+/* Apply transitions to elements that will change with theme */
+body, header, footer, main, button, a, input, textarea, select, 
+.card, .product-card, .btn, .header, .footer {
+  transition: var(--theme-transition);
+}
+
+/* Dark mode theme */
+.dark-mode {
+  --color-background: #111827;
+  --color-text: #f3f4f6;
+  --color-header-bg: #1f2937;
+  --color-footer-bg: #111827;
+  color-scheme: dark;
+}
+
+/* Dark mode specific overrides */
+[data-theme="dark"] .bg-white {
+  background-color: #1f2937;
+}
+
+[data-theme="dark"] .bg-gray-100 {
+  background-color: #111827;
+}
+
+[data-theme="dark"] .text-gray-900 {
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .text-gray-700 {
+  color: #d1d5db;
+}
+
+[data-theme="dark"] .text-gray-600 {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .text-gray-500 {
+  color: #6b7280;
+}
+
+[data-theme="dark"] .border-gray-200 {
+  border-color: #374151;
+}
+
+[data-theme="dark"] .border {
+  border-color: #374151;
+}
+
+[data-theme="dark"] .shadow,
+[data-theme="dark"] .shadow-sm,
+[data-theme="dark"] .shadow-md,
+[data-theme="dark"] .shadow-lg {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+/* Apply theme colors to Tailwind components */
+@layer components {
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-md);
+  }
+  
+  .btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: var(--radius-md);
+  }
+  
+  .btn-accent {
+    background-color: var(--color-accent);
+    color: white;
+    border-radius: var(--radius-md);
+  }
+  
+  .header {
+    background-color: var(--color-header-bg);
+  }
+  
+  .footer {
+    background-color: var(--color-footer-bg);
+  }
+  
+  /* Dark mode toggle button */
+  .theme-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .theme-toggle-btn:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Header styles */
+.theme-centered-header .header-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.theme-minimal-header .header {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 0;
+}
+
+/* Footer styles */
+.theme-simple-footer .footer {
+  padding: 1rem 0;
+}
+
+.theme-expanded-footer .footer {
+  padding: 3rem 0;
+}
+
+/* Product card styles */
+.theme-minimal-product .product-card {
+  border: none;
+  box-shadow: none;
+}
+
+.theme-detailed-product .product-card {
+  padding: 1rem;
+}
+
+/* Button styles */
+.theme-rounded-buttons button,
+.theme-rounded-buttons .btn,
+.theme-rounded-buttons a.btn {
+  border-radius: var(--radius-full);
+}
+
+.theme-square-buttons button,
+.theme-square-buttons .btn,
+.theme-square-buttons a.btn {
+  border-radius: 0;
+}
+
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Grille d'arrière-plan */
+.bg-grid-white {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ajouter classes supplémentaires pour transitions fluides */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Effet de hover amélioré */
+.hover-rotate {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-rotate:hover {
+  transform: rotateY(10deg);
+}
+
+/* Styliser les scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Animation de texte apparaissant lettre par lettre */
+.animate-typing {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
+
+/* Améliorer l'apparence des inputs */
+input, select, textarea {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  outline: none;
+}
+
+/* Ajouter un effet de focus amélioré sur les liens et boutons */
+.focus-effect:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+/* Effet de carte soulevée au hover */
+.hover-lift {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation de fade-in pour les éléments au chargement de la page */
+.fade-in {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
